@@ -6,14 +6,28 @@
 # - Altura: Int()
 
 # Implementar la funcion borrar_tabla, que borra la tabla creada anteriormente.
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import create_engine
 
+Base = declarative_base()
+
+engine = create_engine('sqlite:///mibase.db')
+
+class Persona(Base):
+    __tablename__ = 'personas'
+    idPersona = Column(Integer, primary_key=True)
+    nombre = Column(String(30), nullable=False)
+    fechaNacimiento = Column(Date, nullable=False)
+    dni = Column(Integer, nullable=False)
+    altura = Column(Integer, nullable=False)
 
 def crear_tabla():
-    pass
+    Base.metadata.create_all(engine)
 
 
 def borrar_tabla():
-    pass
+    Persona.__table__.drop(engine)
 
 
 # no modificar
