@@ -11,9 +11,13 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 def buscar_persona(id_persona):
+    busq = session.query(Persona).filter(Persona.idPersona == id_persona).first()
 
+    if busq != None:
+        return busq.idPersona, busq.nombre, busq.fechaNacimiento, busq.dni, busq.altura
+    else:
+        return False
 
-    return False
 
 
 @reset_tabla

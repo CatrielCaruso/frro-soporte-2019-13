@@ -8,13 +8,34 @@
 # - False en caso de no cumplir con alguna validacion.
 
 import datetime
+from sqlalchemy.orm import sessionmaker
+from practico_03a.ejercicio_01 import Persona, engine
+from practico_03a.ejercicio_04 import buscar_persona
+from practico_03a.ejercicio_02 import agregar_persona
+from practico_03a.ejercicio_06 import reset_tabla, Peso
 
-from practico_03.ejercicio_02 import agregar_persona
-from practico_03.ejercicio_06 import reset_tabla
-
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 def agregar_peso(id_persona, fecha, peso):
-    pass
+    busq = buscar_persona(id_persona)
+    if(busq):
+        enc = session.query(Persona).filter(Persona.idPersona == id_persona and Peso.fecha > fecha).all()
+        if enc == []:
+            pes = Peso()
+            pes.fecha = fecha
+            pes.peso = peso
+            session.add(pes)
+            session.commit()
+
+            result = session.query(Peso).filter(Peso.idPersona == id_persona).order_by(Peso.idPersona.desc()).first()
+
+
+
+            return result
+    return False
+
+
 
 
 @reset_tabla

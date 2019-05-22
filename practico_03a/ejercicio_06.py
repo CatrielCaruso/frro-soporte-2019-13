@@ -4,16 +4,22 @@
 # - Peso: Int()
 
 # Implementar la funcion borrar_tabla, que borra la tabla creada anteriormente.
+from sqlalchemy import Column, Integer, Date, ForeignKey
+from practico_03a.ejercicio_01 import borrar_tabla, crear_tabla, Base, engine
 
-from practico_03.ejercicio_01 import borrar_tabla, crear_tabla
-
+class Peso(Base):
+    __tablename__ = 'tabla_peso'
+    idPersona = Column(Integer, ForeignKey('Persona.idPersona'), primary_key=True)
+    fecha = Column(Date, nullable=False)
+    peso = Column(Integer, nullable=False)
 
 def crear_tabla_peso():
-    pass
+    Base.metadata.create_all(engine)
+
 
 
 def borrar_tabla_peso():
-    pass
+    Peso.__table__.drop(engine)
 
 
 # no modificar
