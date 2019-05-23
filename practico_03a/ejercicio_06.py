@@ -9,7 +9,8 @@ from practico_03a.ejercicio_01 import borrar_tabla, crear_tabla, Base, engine
 
 class Peso(Base):
     __tablename__ = 'tabla_peso'
-    idPersona = Column(Integer, ForeignKey('Persona.idPersona'), primary_key=True)
+    idPeso = Column(Integer, primary_key=True)
+    idPersona = Column(Integer, ForeignKey('personas.idPersona'))
     fecha = Column(Date, nullable=False)
     peso = Column(Integer, nullable=False)
 

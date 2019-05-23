@@ -19,20 +19,20 @@ session = DBSession()
 
 def agregar_peso(id_persona, fecha, peso):
     busq = buscar_persona(id_persona)
-    if(busq):
-        enc = session.query(Persona).filter(Persona.idPersona == id_persona and Peso.fecha > fecha).all()
+
+    if busq != None:
+        enc = session.query(Peso).filter(Peso.idPersona== id_persona and Peso.fecha > fecha).all()
         if enc == []:
             pes = Peso()
+            pes.idPersona = id_persona
             pes.fecha = fecha
             pes.peso = peso
             session.add(pes)
             session.commit()
 
-            result = session.query(Peso).filter(Peso.idPersona == id_persona).order_by(Peso.idPersona.desc()).first()
-
-
-
-            return result
+            result = session.query(Peso).filter(Peso.idPersona == id_persona).order_by(Peso.idPeso.desc()).first()
+            return result.idPeso
+        return False
     return False
 
 
@@ -40,12 +40,12 @@ def agregar_peso(id_persona, fecha, peso):
 
 @reset_tabla
 def pruebas():
-    id_juan = agregar_persona('juan perez', datetime.datetime(1988, 5, 15), 32165498, 180)
-    assert agregar_peso(id_juan, datetime.datetime(2018, 5, 26), 80) > 0
+    id_juan = agregar_persona('juan perez', datetime.date(1988, 5, 15), 32165498, 180)
+    assert agregar_peso(id_juan, datetime.date(2018, 5, 26), 80) > 0
     # id incorrecto
-    assert agregar_peso(200, datetime.datetime(1988, 5, 15), 80) == False
+    assert agregar_peso(200, datetime.date(1988, 5, 15), 80) == False
     # registro previo al 2018-05-26
-    assert agregar_peso(id_juan, datetime.datetime(2018, 5, 16), 80) == False
+    assert agregar_peso(id_juan, datetime.date(2018, 5, 16), 80) == False
 
 if __name__ == '__main__':
  pruebas()
