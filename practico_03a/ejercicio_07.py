@@ -20,20 +20,23 @@ session = DBSession()
 def agregar_peso(id_persona, fecha, peso):
     busq = buscar_persona(id_persona)
 
-    if busq != None:
-        enc = session.query(Peso).filter(Peso.idPersona== id_persona and Peso.fecha > fecha).all()
-        if enc == []:
-            pes = Peso()
-            pes.idPersona = id_persona
-            pes.fecha = fecha
-            pes.peso = peso
-            session.add(pes)
-            session.commit()
-
-            result = session.query(Peso).filter(Peso.idPersona == id_persona).order_by(Peso.idPeso.desc()).first()
-            return result.idPeso
+    if not(busq):
         return False
-    return False
+
+    enc = session.query(Peso).filter(Peso.idPersona== id_persona and Peso.fecha > fecha).all()
+
+    if enc != []:
+        return False
+
+    pes = Peso()
+    pes.idPersona = id_persona
+    pes.fecha = fecha
+    pes.peso = peso
+    session.add(pes)
+    session.commit()
+
+    result = session.query(Peso).filter(Peso.idPersona == id_persona).order_by(Peso.idPeso.desc()).first()
+    return result.idPeso
 
 
 
@@ -41,6 +44,7 @@ def agregar_peso(id_persona, fecha, peso):
 @reset_tabla
 def pruebas():
     id_juan = agregar_persona('juan perez', datetime.date(1988, 5, 15), 32165498, 180)
+
     assert agregar_peso(id_juan, datetime.date(2018, 5, 26), 80) > 0
     # id incorrecto
     assert agregar_peso(200, datetime.date(1988, 5, 15), 80) == False

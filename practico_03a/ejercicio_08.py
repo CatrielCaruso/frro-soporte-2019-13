@@ -29,19 +29,9 @@ def listar_pesos(id_persona):
     busq = buscar_persona(id_persona)
     if busq != False:
         enc = session.query(Peso.peso, Peso.fecha).filter(Peso.idPersona == id_persona).all()
-        if enc != None:
-            li = []
-            for i in enc:
-                i = list(i)
-                aux = datetime.datetime(i[0], '%Y-%m-%d')
-                aux_1 = aux.date()
-                i[0] = aux_1
-                li.append(tuple([str(i[0]), i[1]]))
-
-            session.commit()
-            return li
+        return False if enc is None else enc
+    else:
         return False
-    return False
 
 
 

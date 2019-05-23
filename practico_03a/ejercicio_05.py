@@ -3,7 +3,6 @@
 
 import datetime
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import update
 from practico_03a.ejercicio_01 import reset_tabla, Persona, engine
 from practico_03a.ejercicio_02 import agregar_persona
 from practico_03a.ejercicio_04 import buscar_persona
