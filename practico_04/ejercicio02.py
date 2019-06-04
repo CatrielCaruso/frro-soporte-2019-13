@@ -24,7 +24,7 @@ def btnClik(num):
 def operacion():
  global operador
  try:
-    opera = str(eval(operador))
+    opera = eval(operador)
  except:
      clear()
      opera=("ERROR")
@@ -51,7 +51,7 @@ alto_boton = 3
 boton1=Button(ventana, text=' + ',width=ancho_boton,height=alto_boton,command=lambda :btnClik("+")).grid(row=1, column=4)
 boton2=Button(ventana, text=' - ',width=ancho_boton,height=alto_boton,command=lambda :btnClik("-")).grid(row=2, column=4)
 boton3=Button(ventana, text=' / ',width=ancho_boton,height=alto_boton,command=lambda :btnClik("/")).grid(row=3, column=4)
-boton4=Button(ventana, text=' x ',width=ancho_boton,height=alto_boton,command=lambda :btnClik("x")).grid(row=4, column=4)
+boton4=Button(ventana, text=' x ',width=ancho_boton,height=alto_boton,command=lambda :btnClik("*")).grid(row=4, column=4)
 boton5=Button(ventana, text=' 7 ',width=ancho_boton,height=alto_boton,command=lambda :btnClik(7)).grid(row=1, column=1)
 boton6=Button(ventana, text=' 8 ',width=ancho_boton,height=alto_boton,command=lambda :btnClik(8)).grid(row=1, column=2)
 boton7=Button(ventana, text=' 9 ',width=ancho_boton,height=alto_boton,command=lambda :btnClik(9)).grid(row=1, column=3)
