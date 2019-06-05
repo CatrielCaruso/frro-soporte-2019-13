@@ -26,6 +26,7 @@ class Listapais:
         #Creo el Arbol
         self.arbol=ttk.Treeview(self.ventana)
         self.arbol.pack( fill=BOTH, expand=False)
+
         #Cargo el arbol
         self.arbol.insert('','0','item1',text='Rosario')
         self.arbol.insert('', '1', 'item2', text='Cordoba')
@@ -38,7 +39,6 @@ class Listapais:
         self.arbol.insert('item3', 'end', 'dos3', text='CP 9301')
         self.arbol.insert('item4', 'end', 'dos4', text='CP V9410')
         self.arbol.insert('item5', 'end', 'dos5', text='CP S2132')
-
         self.arbol.config(height=15)
 
 
