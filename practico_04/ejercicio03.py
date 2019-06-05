@@ -2,6 +2,7 @@
 ## Ciudades Argentinas y su código postal ( por lo menos 5 ciudades ) .
 
 from tkinter import *
+from tkinter import ttk
 
 
 
@@ -14,47 +15,31 @@ class Listapais:
         #Creo la ventana
 
         self.ventana=Tk()
-        self.ventana.geometry("600x450")
+
+
         self.ventana.title("Ciudades de Argentina")
         self.ventana.iconbitmap("Screenshot_2019-06-03 UTN - Universidad Tecnologica Nacional Facultad Regional Rosario.ico")
-
-
         self.ventana.config(cursor="watch")
         self.ventana.config(bg="beige")
+        self.ventana.geometry("500x300")
 
-        #Creo un label para nombrar a la lista
-        self.nombre=Label(self.ventana,text="Ciudad:").place(x=100,y=100)
-        self.nombre2 = Label(self.ventana, text="Código postal:").place(x=350, y=100)
-        #Creo la lista
+        #Creo el Arbol
+        self.arbol=ttk.Treeview(self.ventana)
+        self.arbol.pack( fill=BOTH, expand=False)
+        #Cargo el arbol
+        self.arbol.insert('','0','item1',text='Rosario')
+        self.arbol.insert('', '1', 'item2', text='Cordoba')
+        self.arbol.insert('', '2', 'item3', text='Chalten')
+        self.arbol.insert('', '3', 'item4', text='Ushuaia')
+        self.arbol.insert('', 'end', 'item5', text='Funes')
 
+        self.arbol.insert('item1','end','dos1',text='CP 2000')
+        self.arbol.insert('item2', 'end', 'dos2', text='CP 5000 ')
+        self.arbol.insert('item3', 'end', 'dos3', text='CP 9301')
+        self.arbol.insert('item4', 'end', 'dos4', text='CP V9410')
+        self.arbol.insert('item5', 'end', 'dos5', text='CP S2132')
 
-        self.lista = Listbox(self.ventana,width=40,selectforeground="#ffffff",
-                                  selectbackground="#00aa00",
-                                  selectborderwidth=5,activestyle=NONE,exportselection=False)
-        self.lista.insert(0, "Rosario ")
-        self.lista.insert(1, "Cordoba")
-        self.lista.insert(2, "Funes")
-        self.lista.insert(3, "Chalten")
-        self.lista.insert(4, "Iruya")
-        self.lista.insert(5, "Mar del Plata")
-
-        self.lista.place(x=100, y=130)
-
-        self.lista2 = Listbox(self.ventana, width=20, selectforeground="#ffffff",
-                             selectbackground="#00aa00",
-                             selectborderwidth=5, activestyle=NONE)
-
-        self.lista2.insert(0, "2000 ")
-        self.lista2.insert(1, "5000")
-        self.lista2.insert(2, "2132")
-        self.lista2.insert(3, "9301")
-        self.lista2.insert(4, "4633")
-        self.lista2.insert(5, "7600")
-
-        self.lista2.place(x=350, y=130)
-
-
-
+        self.arbol.config(height=15)
 
 
 
