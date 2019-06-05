@@ -60,6 +60,7 @@ class Listapais:
         self.ventana.mainloop()
 
 
+#Verificar
 def main():
    mi_app = Listapais()
    return 0
