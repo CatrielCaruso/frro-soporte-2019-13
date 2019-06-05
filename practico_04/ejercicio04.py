@@ -18,17 +18,26 @@ class Listapais:
         self.ventana=Tk()
 
 
-        self.ventana.title("Ciudades de Argentina")
+        self.ventana.title("Ciudades y su código postal de Argentina")
         self.ventana.iconbitmap("Screenshot_2019-06-03 UTN - Universidad Tecnologica Nacional Facultad Regional Rosario.ico")
         self.ventana.config(cursor="watch")
         self.ventana.config(bg="beige")
-        self.ventana.geometry("500x300")
+        self.ventana.geometry("500x350")
+
+
 
         #Creo el Arbol
         self.arbol=ttk.Treeview(self.ventana)
-        self.arbol.pack( fill=BOTH, expand=False)
-
-
+        self.arbol.pack( )
+        # Creo botones
+        self.ancho_boton = 11
+        self.alto_boton = 3
+        self.boton1 = Button(self.ventana,width=self.ancho_boton,height=self.alto_boton, text="Insert")
+        self.boton1.place(x=400,y=10)
+        self.boton2 = Button(self.ventana,width=self.ancho_boton,height=self.alto_boton, text="Delete")
+        self.boton2.place(x=400, y=135)
+        self.boton3 = Button(self.ventana,width=self.ancho_boton,height=self.alto_boton, text="Update")
+        self.boton3.place(x=400, y=260)
 
         #Cargo el arbol
         self.arbol.insert('', 'end', 'item0', text='Ciudades')
@@ -51,6 +60,16 @@ class Listapais:
         self.ventana.mainloop()
 
 
+def main():
+   mi_app = Listapais()
+   return 0
 
 
-listita=Listapais()
+if __name__ == '__main__':
+   main()
+
+
+
+
+
+
