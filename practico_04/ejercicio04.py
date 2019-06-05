@@ -5,44 +5,52 @@
 from tkinter import *
 from tkinter import ttk
 
-root = Tk()
-root.configure(background="white")
-root.title("Lista de Ciudades")
-root.geometry("200x300")
-root.resizable(False, False)
-# Centra la ventana.
-root.geometry(
-    "+{}+{}".format(
-        int(root.winfo_screenwidth() / 2 - root.winfo_reqwidth() / 2),
-        int(root.winfo_screenheight() / 2 - root.winfo_reqheight() / 2),
-    )
-)
-root.protocol("WM_DELETE_WINDOW", lambda: closeWindow(root))
 
 
-def closeWindow(window):
-    window.destroy()
-    window.quit()
 
 
-def createControls():
-    treeView = ttk.Treeview(root, show="tree")
-    treeView.pack(fill="both", expand=True)
-    item = treeView.insert("", END, text="Ciudades")
-    subitem = treeView.insert(item, END, text="Armstrong")
-    treeView.insert(subitem, END, text="CP 2508")
-    subitem = treeView.insert(item, END, text="Buenos Aires")
-    treeView.insert(subitem, END, text="CP 1000")
-    subitem = treeView.insert(item, END, text="Córdoba")
-    treeView.insert(subitem, END, text="CP 5000")
-    subitem = treeView.insert(item, END, text="La Plata")
-    treeView.insert(subitem, END, text="CP 1900")
-    subitem = treeView.insert(item, END, text="Mar del Plata")
-    treeView.insert(subitem, END, text="CP 7600")
-    subitem = treeView.insert(item, END, text="Rosario")
-    treeView.insert(subitem, END, text="CP 2000")
+class Listapais:
+
+     def __init__(self):
+
+        #Creo la ventana
+
+        self.ventana=Tk()
 
 
-if __name__ == "__main__":
-    createControls()
-    root.mainloop()
+        self.ventana.title("Ciudades de Argentina")
+        self.ventana.iconbitmap("Screenshot_2019-06-03 UTN - Universidad Tecnologica Nacional Facultad Regional Rosario.ico")
+        self.ventana.config(cursor="watch")
+        self.ventana.config(bg="beige")
+        self.ventana.geometry("500x300")
+
+        #Creo el Arbol
+        self.arbol=ttk.Treeview(self.ventana)
+        self.arbol.pack( fill=BOTH, expand=False)
+
+
+
+        #Cargo el arbol
+        self.arbol.insert('', 'end', 'item0', text='Ciudades')
+
+        self.arbol.insert('item0','0','item1',text='Rosario')
+        self.arbol.insert('item0', '1', 'item2', text='Cordoba')
+        self.arbol.insert('item0', '2', 'item3', text='Chalten')
+        self.arbol.insert('item0', '3', 'item4', text='Ushuaia')
+        self.arbol.insert('item0', '4', 'item5', text='Funes')
+
+        self.arbol.insert('item1','end','dos1',text='CP 2000')
+        self.arbol.insert('item2', 'end', 'dos2', text='CP 5000 ')
+        self.arbol.insert('item3', 'end', 'dos3', text='CP 9301')
+        self.arbol.insert('item4', 'end', 'dos4', text='CP V9410')
+        self.arbol.insert('item5', 'end', 'dos5', text='CP S2132')
+        self.arbol.config(height=15)
+
+
+
+        self.ventana.mainloop()
+
+
+
+
+listita=Listapais()
