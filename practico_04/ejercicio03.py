@@ -27,12 +27,16 @@ class Listapais:
         self.arbol=ttk.Treeview(self.ventana)
         self.arbol.pack( fill=BOTH, expand=False)
 
+
+
         #Cargo el arbol
-        self.arbol.insert('','0','item1',text='Rosario')
-        self.arbol.insert('', '1', 'item2', text='Cordoba')
-        self.arbol.insert('', '2', 'item3', text='Chalten')
-        self.arbol.insert('', '3', 'item4', text='Ushuaia')
-        self.arbol.insert('', 'end', 'item5', text='Funes')
+        self.arbol.insert('', 'end', 'item0', text='Ciudades')
+
+        self.arbol.insert('item0','0','item1',text='Rosario')
+        self.arbol.insert('item0', '1', 'item2', text='Cordoba')
+        self.arbol.insert('item0', '2', 'item3', text='Chalten')
+        self.arbol.insert('item0', '3', 'item4', text='Ushuaia')
+        self.arbol.insert('item0', '4', 'item5', text='Funes')
 
         self.arbol.insert('item1','end','dos1',text='CP 2000')
         self.arbol.insert('item2', 'end', 'dos2', text='CP 5000 ')
