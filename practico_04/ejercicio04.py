@@ -18,19 +18,19 @@ class Formulario(ttk.Frame):
         main_window.config(cursor="watch")
         main_window.config(bg="beige")
          #datos del arbol(Treeview), Descarte que inicie desde ciudad porque no podia configurarlo en el alta.
-        self.treeview = ttk.Treeview(self)
+        self.arbol = ttk.Treeview(self)
 
-        item = self.treeview.insert("", tk.END, text="Rosario")
-        self.treeview.insert(item, tk.END, text=" CP 2000")
-        item = self.treeview.insert("", tk.END, text="Cordoba")
-        self.treeview.insert(item, tk.END, text="CP 5000")
-        item = self.treeview.insert("", tk.END, text="Chalten")
-        self.treeview.insert(item, tk.END, text="CP 9301")
-        item = self.treeview.insert("", tk.END, text="Ushuaia")
-        self.treeview.insert(item, tk.END, text="CP V9410")
-        item = self.treeview.insert("", tk.END, text="Funes")
-        self.treeview.insert(item, tk.END, text="CP S2122")
-        self.treeview.pack()
+        item = self.arbol.insert("", tk.END, text="Rosario")
+        self.arbol.insert(item, tk.END, text=" CP 2000")
+        item = self.arbol.insert("", tk.END, text="Cordoba")
+        self.arbol.insert(item, tk.END, text="CP 5000")
+        item = self.arbol.insert("", tk.END, text="Chalten")
+        self.arbol.insert(item, tk.END, text="CP 9301")
+        item = self.arbol.insert("", tk.END, text="Ushuaia")
+        self.arbol.insert(item, tk.END, text="CP V9410")
+        item = self.arbol.insert("", tk.END, text="Funes")
+        self.arbol.insert(item, tk.END, text="CP S2122")
+        self.arbol.pack()
 
         self.pack()
 
@@ -59,8 +59,8 @@ def formulario_alta():
     btn_alta = tk.Button(new_ventana, text="Añadir")
     btn_alta.grid(column=3, row=2, padx=(50,50), pady=(10,10))
     def alta(event):
-        item = form.treeview.insert("", tk.END, text=Ciudad.get())
-        form.treeview.insert(item, tk.END, text=CP.get())
+        item = form.arbol.insert("", tk.END, text=Ciudad.get())
+        form.arbol.insert(item, tk.END, text=CP.get())
         main_window.deiconify()
 
     btn_alta.bind("<Button-1>", alta)
@@ -74,8 +74,8 @@ btn_frm_alta.place(x=400,y=80)
 
 '''Baja'''
 def baja():
-    dev_item = form.treeview.focus()
-    form.treeview.delete(dev_item)
+    dev_item = form.arbol.focus()
+    form.arbol.delete(dev_item)
 
 
 ancho_boton = 11
@@ -88,11 +88,11 @@ btn_baja.place(x=400,y=0)
 def formulario_modificacion():
     new_ventana = tk.Toplevel(main_window)
     main_window.iconify()
-    elem = form.treeview.focus()
-    elem_child = form.treeview.get_children(elem)
-    var_ciudad = tk.StringVar(new_ventana, value=form.treeview.item(elem)['text'])
+    elem = form.arbol.focus()
+    elem_child = form.arbol.get_children(elem)
+    var_ciudad = tk.StringVar(new_ventana, value=form.arbol.item(elem)['text'])
 
-    var_CP = tk.StringVar(new_ventana, value=form.treeview.item(elem_child)['text'])
+    var_CP = tk.StringVar(new_ventana, value=form.arbol.item(elem_child)['text'])
     label = tk.Label(new_ventana, text="Ciudad: ")
     label2 = tk.Label(new_ventana, text="Código Postal: ")
     label.grid(column=1, row=1, padx=(50,50), pady=(10,10))
@@ -107,8 +107,8 @@ def formulario_modificacion():
     btn_alta = tk.Button(new_ventana, text="Modificar")
     btn_alta.grid(column=8, padx=(50,50), pady=(10,10), row=2)
     def modificacion(event):
-        form.treeview.item(elem,text=Ciudad.get())
-        form.treeview.item(elem_child,text=CP.get())
+        form.arbol.item(elem,text=Ciudad.get())
+        form.arbol.item(elem_child,text=CP.get())
         main_window.deiconify()
 
     btn_alta.bind("<Button-1>", modificacion)
