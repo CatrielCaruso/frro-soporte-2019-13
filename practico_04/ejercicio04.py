@@ -13,7 +13,7 @@ class Formulario(ttk.Frame):
         super().__init__(main_window)
         #Datos de la ventana principal
         main_window.geometry("500x300")
-        main_window.title("Ciudades de Argentina")
+        main_window.title("Ciudades y código postal  de Argentina")
         main_window.iconbitmap("Screenshot_2019-06-03 UTN - Universidad Tecnologica Nacional Facultad Regional Rosario.ico")
         main_window.config(cursor="watch")
         main_window.config(bg="beige")
