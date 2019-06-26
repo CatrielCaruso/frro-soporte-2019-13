@@ -4,6 +4,16 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from practico_05.ejercicio_01 import Base, Socio
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+#Coneccion
+
+engine = create_engine('sqlite:///mibase.db',echo = True)
+
+
+
 
 
 class DatosSocio(object):
