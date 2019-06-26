@@ -4,22 +4,18 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from practico_05.ejercicio_01 import Base, Socio
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
-
-#Coneccion
-
-engine = create_engine('sqlite:///mibase.db',echo = True)
+from getpass import getuser
 
 
 
+#Clase y funciones
 
 
 class DatosSocio(object):
 
     def __init__(self):
-        engine = create_engine('sqlite:///socios.db')
+        engine = create_engine('sqlite:///C:\\Users\\' +
+                               getuser() + '\\Desktop\\tp5_python.db', echo=True)
         Base.metadata.bind = engine
         db_session = sessionmaker()
         db_session.bind = engine
@@ -30,23 +26,39 @@ class DatosSocio(object):
         Devuelve la instancia del socio, dado su id.
         Devuelve None si no encuentra nada.
         :rtype: Socio
-        """
-        return
 
-    def buscar_dni(self, dni_socio):
+        """
+        busq = self.session.query(Socio).filter(Socio.id_socio == id_socio).first()
+
+        if busq != None:
+            return busq.id_socio, busq.dni, busq.nombre, busq.apellido
+        else:
+            return False
+
+
+    def buscar_dni(self, dni):
         """
         Devuelve la instancia del socio, dado su dni.
         Devuelve None si no encuentra nada.
         :rtype: Socio
         """
-        return
+        busq = self.session.query(Socio).filter(Socio.dni == dni).first()
+
+        if busq != None:
+            return busq.id_socio, busq.dni, busq.nombre, busq.apellido
+        else:
+            return False
 
     def todos(self):
         """
         Devuelve listado de todos los socios en la base de datos.
         :rtype: list
         """
-        return []
+        busq = self.session.query(Socio).all()
+
+
+        return busq
+
 
     def borrar_todos(self):
         """
@@ -54,7 +66,15 @@ class DatosSocio(object):
         Devuelve True si el borrado fue exitoso.
         :rtype: bool
         """
-        return False
+
+        try:
+            self.session.query(Socio).delete
+            return True
+
+        except:
+
+             return False
+
 
     def alta(self, socio):
         """
@@ -62,6 +82,9 @@ class DatosSocio(object):
         :type socio: Socio
         :rtype: Socio
         """
+
+        self.session.add(socio)
+        self.session.commit()
         return socio
 
     def baja(self, id_socio):
@@ -70,7 +93,16 @@ class DatosSocio(object):
         Devuelve True si el borrado fue exitoso.
         :rtype: bool
         """
-        return False
+        socio=self.buscar(id_socio)
+        if socio is None:
+
+
+             return False
+        else:
+
+             self.session.delete(socio)
+             self.session.commit()
+             return True
 
     def modificacion(self, socio):
         """
@@ -79,21 +111,26 @@ class DatosSocio(object):
         :type socio: Socio
         :rtype: Socio
         """
-        return socio
+        socio_enc=self.buscar(socio.id_socio)
+        socio_enc.dni=socio.dni
+        socio_enc.nombre=socio.nombre
+        socio_enc.apellido=socio.apellido
+        self.session.commit()
+        return socio_enc
 
 
 def pruebas():
     # alta
     datos = DatosSocio()
     socio = datos.alta(Socio(dni=12345678, nombre='Juan', apellido='Perez'))
-    assert socio.id > 0
+    assert socio.id_socio > 0
 
     # baja
-    assert datos.baja(socio.id) == True
+    assert datos.baja(socio.id_socio) == True
 
     # buscar
     socio_2 = datos.alta(Socio(dni=12345679, nombre='Carlos', apellido='Perez'))
-    assert datos.buscar(socio_2.id) == socio_2
+    assert datos.buscar(socio_2.id_socio) == socio_2
 
     # buscar dni
     socio_2 = datos.alta(Socio(dni=12345679, nombre='Carlos', apellido='Perez'))
@@ -105,8 +142,8 @@ def pruebas():
     socio_3.apellido = 'Casan'
     socio_3.dni = 13264587
     datos.modificacion(socio_3)
-    socio_3_modificado = datos.buscar(socio_3.id)
-    assert socio_3_modificado.id == socio_3.id
+    socio_3_modificado = datos.buscar(socio_3.id_socio)
+    assert socio_3_modificado.id_socio == socio_3.id_socio
     assert socio_3_modificado.nombre == 'Moria'
     assert socio_3_modificado.apellido == 'Casan'
     assert socio_3_modificado.dni == 13264587

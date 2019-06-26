@@ -6,11 +6,10 @@
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
-from sqlalchemy import create_engine
 
 Base = declarative_base()
 
-engine = create_engine('sqlite:///mibase.db',echo = True)
+
 
 class Socio(Base):
     __tablename__ = 'socios'
@@ -24,4 +23,3 @@ class Socio(Base):
     # apellido = Column(...)
     apellido=Column(String(250))
 
-Base.metadata.create_all(engine)
