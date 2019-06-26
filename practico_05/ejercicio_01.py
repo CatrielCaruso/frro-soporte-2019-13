@@ -3,7 +3,7 @@
 # - dni: entero (unico)
 # - nombre: string (longitud 250)
 # - apellido: string (longitud 250)
-
+import math
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -16,3 +16,4 @@ class Socio(Base):
     # dni = Column(...)
     # nombre = Column(...)
     # apellido = Column(...)
+
