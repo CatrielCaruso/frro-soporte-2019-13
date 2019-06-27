@@ -4,7 +4,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from practico_05.ejercicio_01 import Base, Socio
-from getpass import getuser
+
 
 
 
@@ -29,7 +29,7 @@ class DatosSocio(object):
 
         """
         try:
-            return self.session.query(Socio).filter(Socio.id_socio == id_socio).first()
+            return self.session.query(Socio).filter_by(Socio.id_socio == id_socio).first()
         except:
             return None
 
@@ -41,7 +41,7 @@ class DatosSocio(object):
         Devuelve None si no encuentra nada.
         :rtype: Socio
         """
-        busq = self.session.query(Socio).filter(Socio.dni == dni).first()
+        busq = self.session.query(Socio).filter_by(Socio.dni == dni).first()
 
         if busq != None:
             return busq.id_socio, busq.dni, busq.nombre, busq.apellido
