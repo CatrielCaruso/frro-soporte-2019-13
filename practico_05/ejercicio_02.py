@@ -1,123 +1,82 @@
 # Implementar los metodos de la capa de datos de socios.
 
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from practico_05.ejercicio_01 import Base, Socio
 
-
-
-
-#Clase y funciones
-
-
+ #Clase y funciones
 class DatosSocio(object):
 
     def __init__(self):
-        engine = create_engine('sqlite://', echo=True)
+        engine = create_engine('sqlite:///socios.db', echo=True)
+        Base.metadata.drop_all(engine)
         Base.metadata.bind = engine
         Base.metadata.create_all(engine)
         db_session = sessionmaker()
         db_session.bind = engine
         self.session = db_session()
 
-    def buscar(self, id_socio):
-        """
-        Devuelve la instancia del socio, dado su id.
-        Devuelve None si no encuentra nada.
-        :rtype: Socio
 
-        """
+#Buscar por id_socio
+    def buscar(self, id_socio):
         try:
-            return self.session.query(Socio).filter_by(Socio.id_socio == id_socio).first()
+            return self.session.query(Socio).filter_by(id_socio=id_socio).first()
         except:
             return None
 
+#Buscar por dni
+    def buscar_dni(self, dni_socio):
+        try:
+            return self.session.query(Socio).filter_by(dni=dni_socio).first()
+        except:
+            return None
 
+#Traigo a todos los socios
+    def todos(self):
+        try:
+            return self.session.query(Socio).all()
+        except:
+            return None
 
-    def buscar_dni(self, dni):
-        """
-        Devuelve la instancia del socio, dado su dni.
-        Devuelve None si no encuentra nada.
-        :rtype: Socio
-        """
-        busq = self.session.query(Socio).filter_by(Socio.dni == dni).first()
-
-        if busq != None:
-            return busq.id_socio, busq.dni, busq.nombre, busq.apellido
-        else:
+#Borro a todos los socios
+    def borrar_todos(self):
+        try:
+            self.session.query(Socio).delete()
+            return True
+        except:
             return False
 
-    def todos(self):
-        """
-        Devuelve listado de todos los socios en la base de datos.
-        :rtype: list
-        """
-        busq = self.session.query(Socio).all()
 
-
-        return busq
-
-
-    def borrar_todos(self):
-        """
-        Borra todos los socios de la base de datos.
-        Devuelve True si el borrado fue exitoso.
-        :rtype: bool
-        """
-
-        try:
-            self.session.query(Socio).delete
-            return True
-
-        except:
-
-             return False
-
-
+#Dar de alta a un socio
     def alta(self, socio):
-        """
-        Devuelve el Socio luego de darlo de alta.
-        :type socio: Socio
-        :rtype: Socio
-        """
-
         self.session.add(socio)
         self.session.commit()
         return socio
 
+# dar de baja a un socio
     def baja(self, id_socio):
-        """
-        Borra el socio especificado por el id.
-        Devuelve True si el borrado fue exitoso.
-        :rtype: bool
-        """
-        socio=self.buscar(id_socio)
+        socio = self.buscar(id_socio)
         if socio is None:
-
-
-             return False
+            return False
         else:
+            try:
+                self.session.delete(socio)
+                self.session.commit()
+                return True
+            except:
+                return False
 
-             self.session.delete(socio)
-             self.session.commit()
-             return True
 
+# Modifico actualizo un socio
     def modificacion(self, socio):
-        """
-        Guarda un socio con sus datos modificados.
-        Devuelve el Socio modificado.
-        :type socio: Socio
-        :rtype: Socio
-        """
-        socio_enc=self.buscar(socio.id_socio)
-        socio_enc.dni=socio.dni
-        socio_enc.nombre=socio.nombre
-        socio_enc.apellido=socio.apellido
+        socio_bus = self.buscar(socio.id_socio)
+        socio_bus.dni = socio.dni
+        socio_bus.nombre = socio.nombre
+        socio_bus.apellido = socio.apellido
         self.session.commit()
-        return socio_enc
+        return socio_bus
 
-
+#Pruebas para validar el codigo
 def pruebas():
     # alta
     datos = DatosSocio()
@@ -132,8 +91,7 @@ def pruebas():
     assert datos.buscar(socio_2.id_socio) == socio_2
 
     # buscar dni
-    socio_2 = datos.alta(Socio(dni=12345679, nombre='Carlos', apellido='Perez'))
-    assert datos.buscar(socio_2.dni) == socio_2
+    assert datos.buscar_dni(socio_2.dni) == socio_2
 
     # modificacion
     socio_3 = datos.alta(Socio(dni=12345680, nombre='Susana', apellido='Gimenez'))
