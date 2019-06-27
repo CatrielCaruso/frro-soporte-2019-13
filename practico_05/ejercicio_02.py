@@ -14,9 +14,9 @@ from getpass import getuser
 class DatosSocio(object):
 
     def __init__(self):
-        engine = create_engine('sqlite:///C:\\Users\\' +
-                               getuser() + '\\Desktop\\tp5_python.db', echo=True)
+        engine = create_engine('sqlite://', echo=True)
         Base.metadata.bind = engine
+        Base.metadata.create_all(engine)
         db_session = sessionmaker()
         db_session.bind = engine
         self.session = db_session()
@@ -28,12 +28,11 @@ class DatosSocio(object):
         :rtype: Socio
 
         """
-        busq = self.session.query(Socio).filter(Socio.id_socio == id_socio).first()
+        try:
+            return self.session.query(Socio).filter(Socio.id_socio == id_socio).first()
+        except:
+            return None
 
-        if busq != None:
-            return busq.id_socio, busq.dni, busq.nombre, busq.apellido
-        else:
-            return False
 
 
     def buscar_dni(self, dni):
