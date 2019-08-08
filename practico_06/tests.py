@@ -3,7 +3,7 @@
 import unittest
 
 from practico_05.ejercicio_01 import Socio
-from practico_06.capa_negocio import NegocioSocio, LongitudInvalida
+from practico_06.capa_negocio import NegocioSocio, LongitudInvalida, MaximoAlcanzado, DniRepetido
 
 
 class TestsNegocio(unittest.TestCase):
@@ -29,7 +29,12 @@ class TestsNegocio(unittest.TestCase):
         self.assertEqual(len(self.ns.todos()), 1)
 
     def test_regla_1(self):
-        pass
+        valido = Socio(dni = 35678942, nombre='Gabriel', apellido='Gomez')
+        self.assertTrue(self.ns.regla_1(valido))
+
+        #dni repetido
+        invalido = Socio(dni=12345678, nombre='Juan', apellido='Perez')
+        self.assertRaises(DniRepetido, self.ns.regla_1, invalido)
 
     def test_regla_2_nombre_menor_3(self):
         # valida regla
@@ -41,16 +46,38 @@ class TestsNegocio(unittest.TestCase):
         self.assertRaises(LongitudInvalida, self.ns.regla_2, invalido)
 
     def test_regla_2_nombre_mayor_15(self):
-        pass
+        valido = Socio(dni=12345678, nombre='Juan', apellido='Perez')
+        self.assertTrue(self.ns.regla_2(valido))
+
+        # nombre de mas de 15 caracteres
+        invalido = Socio(dni=12345678, nombre='Javier Roberto Jose', apellido='Perez')
+        self.assertRaises(LongitudInvalida, self.ns.regla_2, invalido)
 
     def test_regla_2_apellido_menor_3(self):
-        pass
+        valido = Socio(dni=12345678, nombre='Juan', apellido='Perez')
+        self.assertTrue(self.ns.regla_2(valido))
+
+        #apellido menor a 3 caracteres
+        invalido = Socio(dni=12345678, nombre='Juan', apellido='P')
+        self.assertTrue(self.ns.regla_2(invalido))
 
     def test_regla_2_apellido_mayor_15(self):
-        pass
+        valido = Socio(dni=12345678, nombre='Juan', apellido='Perez')
+        self.assertTrue(self.ns.regla_2(valido))
+
+        #apellido de mas de 15 caracteres
+        invalido = Socio(dni=12345678, nombre='Juan', apellido='Perez Rodriguez')
+        self.assertTrue(self.ns.regla_2(invalido))
 
     def test_regla_3(self):
-        pass
+        socio = Socio(dni=45678912, nombre="Luís", apellido="Lopez")
+        self.ns.alta(socio)
+        self.assertTrue(self.ns.regla_3())
+
+        #socios mayores a 200
+        socio = Socio(dni=45678912, nombre="Luís", apellido="Lopez")
+        self.ns.alta(socio)
+        self.assertRaises(MaximoAlcanzado, self.ns.regla_3())
 
     def test_baja(self):
         pass
