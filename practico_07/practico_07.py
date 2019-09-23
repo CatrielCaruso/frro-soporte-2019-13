@@ -11,3 +11,21 @@ Apretar el Boton Baja se tiene que dar de baja el socio seleccionado .
 
 Apretar el Boton Modificar se tiene que abrir un formulario con los campos con los datos del socio seleccionado .
 Incluye 2 botones Aceptar y Cancelar . """
+
+from tkinter import *
+
+# Creacion de la ventana principal
+
+ventana = Tk()
+ventana.geometry('700x500')
+ventana.configure(bg="SlateGray3" )
+ventana.title('ABM Socios')
+ventana.resizable(0, 0)
+
+# Creación del frame
+
+marco=Frame()
+marco.pack()
+marco.config(bg="ghost white")
+marco.config(width="650", height="450")
+ventana.mainloop()
