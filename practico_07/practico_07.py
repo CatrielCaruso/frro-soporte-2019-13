@@ -15,13 +15,12 @@ Incluye 2 botones Aceptar y Cancelar . """
 from practico_05.ejercicio_01 import Socio
 from practico_06.capa_negocio import NegocioSocio
 from tkinter import *
-from tkinter import ttk
 from enum import Enum
 
 # CREACION DE LA VENTANA
 
 ventana = Tk()
-ventana.configure(background="snow")
+ventana.configure(background="gray")
 ventana.title("ABM Socios")
 ventana.geometry("500x500")
 ventana.resizable(0, 0)
@@ -32,7 +31,7 @@ marco = Frame(ventana)
 marco.grid(column=0, row=0, padx=(10,10), pady=(1,1))
 boton = Frame(ventana, width=52)
 boton.grid(column=0, row=1, padx=(10,10), pady=(1,1))
-# Para centrar la ventana ventana.
+"""Para centrar"""
 
 
 ventana.geometry(
@@ -52,12 +51,13 @@ class Opciones(Enum):
 
 id_socio_seleccionado = IntVar()
 
-def close_window(window):
-    window.destroy()
-    window.quit()
 
 def create_controls():
     get_socios()
+
+def close_window(window):
+    window.destroy()
+    window.quit()
 
 def get_socios():
     add_data_to_table()
@@ -87,6 +87,8 @@ def delete_frame_grid_controls():
     for l in list:
         l.destroy()
 
+"""cración de los botones"""
+
 def create_buttons(cont):
     Button(boton, text="Crear", width=10, anchor="center", padx=5, command=lambda:add_or_update_socio(Opciones.ALTA)).grid(row=0,column=0)
     Button(boton, text="Modificar", width=10, anchor="center", padx=5, command=lambda:add_or_update_socio(Opciones.MODIFICACION)).grid(row=0,column=1)
@@ -95,7 +97,7 @@ def create_buttons(cont):
 
 def add_or_update_socio(opcion):
     win = Toplevel()
-    win.configure(background="white")
+    win.configure(background="green")
     win.geometry("240x130")
     win.resizable(0, 0)
     win.geometry(
@@ -132,7 +134,7 @@ def add_or_update_socio(opcion):
         nombre_socio.set(socio.nombre)
         apellido_socio.set(socio.apellido)
     elif opcion == Opciones.ALTA:
-        win.title("Crear socio")
+        win.title("Nuevo Socio")
 
     Label(win, text="DNI", bg="white").grid(
         sticky=W + N + S, column=0, row=0, padx=5, pady=5
